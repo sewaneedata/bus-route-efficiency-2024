@@ -5,3 +5,9 @@
 #hide the html files
 **/*.html
 **/*.DS_Store
+**/*.csv
+**/*.xlsx
+**/*.json
+**/*.db
+**/*.js
+**/*.css
