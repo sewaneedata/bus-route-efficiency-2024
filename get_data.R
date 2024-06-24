@@ -21,3 +21,19 @@ head(bus_df)
 
 #Last rows
 tail(bus_df)
+
+# Data key 
+# BV <- Broadview Elementary School
+# CM <-Clark Memorial Elementary School
+# C  <-Cowan Elementary School
+# D  <-Decherd Elementary School
+# FC <-Franklin County High School
+# H  <-Huntland Schools
+# NL <-North Lake Elementary
+# NM <-North Middle School
+# RC <-Rock Creek Elementary School
+# S  <-Sewanee Elementary School
+# SM <-South Middle School
+
+
+
