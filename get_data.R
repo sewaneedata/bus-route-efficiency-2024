@@ -7,9 +7,9 @@ library(readxl)
 
 #load data
 
-drive_download("https://docs.google.com/spreadsheets/d/1jXgmUvc1uVJFxSnDV9dYZgEJZjoZ7Bqq/edit?usp=sharing&ouid=112944113011797673714&rtpof=true&sd=true", path = "data/roster_tally.xls", overwrite = TRUE)
+drive_download("https://docs.google.com/spreadsheets/d/1jXgmUvc1uVJFxSnDV9dYZgEJZjoZ7Bqq/edit?usp=sharing&ouid=112944113011797673714&rtpof=true&sd=true", path = "data/bus_route.xlsx", overwrite = TRUE)
 
-bus_df <- read_excel("data/roster_tally.xls")
+bus_df <- read_excel("data/bus_route.xlsx")
 
 # Number of columns
 ncol(bus_df)
