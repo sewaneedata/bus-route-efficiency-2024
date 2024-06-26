@@ -7,7 +7,9 @@
 **/*.DS_Store
 **/*.csv
 **/*.xlsx
+**/*.xls
 **/*.json
 **/*.db
 **/*.js
 **/*.css
+data
