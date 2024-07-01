@@ -1,42 +1,23 @@
-# load libraries
-
-
+library(sf)
+library(tmap)
+library(osmdata)
+library(tidycensus)
 library(tidyverse)
-library(googledrive)
-library(readxl)
+library(mapsapi)
+library(geodata)
 
+bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>% 
+  mutate( Address = paste0( Address, " 'Franklin County' TN" ) )
 
-#load data
+load("bus_gis.RData")
 
-drive_download("https://docs.google.com/spreadsheets/d/1jXgmUvc1uVJFxSnDV9dYZgEJZjoZ7Bqq/edit?usp=sharing&ouid=112944113011797673714&rtpof=true&sd=true", path = "data/roster_tally.xls", overwrite = TRUE)
+bus_routes <- left_join( bus_points %>% select( Address = address, address_google, location_type, pnt ), bus_routes, by = "Address")
+bus_routes$Bus <- factor( as.character(bus_routes$Bus) )
 
-bus_df <- read_excel("data/roster_tally.xls")
+tmap_mode( "view" )
+tmap_options( basemaps = providers$OpenStreetMap )
 
-# Number of columns
-ncol(bus_df)
-
-# Number of rows
-nrow(bus_df)
-
-# Name of variables
-names(bus_df)
-
-#First rows 
-head(bus_df)
-
-#Last rows
-tail(bus_df)
-
-# Data key 
-# BV <- Broadview Elementary School
-# CM <- Clark Memorial Elementary School
-# C  <- Cowan Elementary School
-# D  <- Decherd Elementary School
-# FC <- Franklin County High School
-# H  <- Huntland Schools
-# NL <- North Lake Elementary
-# NM <- North Middle School
-# RC <- Rock Creek Elementary School
-# S  <- Sewanee Elementary School
-# SM <- South Middle School
-
+tm_shape( franklin ) + 
+  tm_polygons( alpha = 0.5, lwd=3 ) +
+  tm_shape( bus_routes ) +
+  tm_dots( col="Bus" )
