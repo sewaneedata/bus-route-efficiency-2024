@@ -12,7 +12,7 @@ bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy
   mutate( Address = paste0( Address, " 'Franklin County' TN" ) )
 
 #Need to ask Dr.Rudd about this data.
-load("data/bus_gis.RData")
+load("data/bus_gis1.RData")
 
 #Need to ask Dr.Rudd what these lines do.
 bus_routes <- left_join( bus_points %>% select( Address = address, address_google, location_type, pnt ), bus_routes, by = "Address")
@@ -28,4 +28,5 @@ tm_shape( franklin ) +
   tm_polygons( alpha = 0.5, lwd=3 ) +
   tm_shape( bus_routes ) +
   tm_dots( col="Bus" )
+
 
