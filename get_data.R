@@ -7,9 +7,10 @@ library(tidycensus)
 library(tidyverse)
 library(mapsapi)
 library(geodata)
+library(leaflet)
 
 # load bus routes data
-# Reads in the chool data
+# Reads in the school data
 schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
 
 # Transforms the school data into long/lat coordinates. 
@@ -50,7 +51,7 @@ for(bus in buses ){
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
     tm_dots(col = "Bus", size=0.1) +
     tm_shape( schools ) + 
-    tm_dots()
+    tm_dots(col = 'SCHOOL', id = 'SCHOOL')
 }
 
 # Getting unique values of bus routes to unselect the layers by default. 
@@ -59,7 +60,6 @@ map %>%
   tmap_leaflet( ) %>%
   hideGroup( bus_route_names ) 
 
-# code to load the coordinates for the Franklin Country schools -- the tmap code at the end plots them.
 
 
 
