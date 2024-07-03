@@ -9,6 +9,11 @@ library(mapsapi)
 library(geodata)
 
 # load bus routes data
+# Reads in the chool data
+schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
+
+# Transforms the school data into long/lat coordinates. 
+schools <- st_as_sf( schools, coords = c("LONG", "LAT"), crs = "WGS84")
 
 bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>% 
   mutate( Address = paste0( Address, " 'Franklin County' TN" ) )
@@ -43,7 +48,9 @@ buses <- levels( bus_routes$Bus )
 for(bus in buses ){
   map <- map +
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
-    tm_dots(col = "Bus", size=0.1)
+    tm_dots(col = "Bus", size=0.1) +
+    tm_shape( schools ) + 
+    tm_dots()
 }
 
 # Getting unique values of bus routes to unselect the layers by default. 
@@ -54,16 +61,8 @@ map %>%
 
 # code to load the coordinates for the Franklin Country schools -- the tmap code at the end plots them.
 
-# Reads in the chool data
-schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
 
-# Transforms the school data into long/lat coordinates. 
-schools <- st_as_sf( schools, coords = c("LONG", "LAT"), crs = "WGS84")
 
-tm_shape( franklin ) + 
-  tm_polygons( alpha = 0.5, lwd=3 ) + 
-  tm_shape( schools ) + 
-  tm_dots()
 
 
 
