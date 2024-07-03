@@ -52,5 +52,18 @@ map %>%
   tmap_leaflet( ) %>%
   hideGroup( bus_route_names ) 
 
+# code to load the coordinates for the Franklin Country schools -- the tmap code at the end plots them.
+
+# Reads in the chool data
+schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
+
+# Transforms the school data into long/lat coordinates. 
+schools <- st_as_sf( schools, coords = c("LONG", "LAT"), crs = "WGS84")
+
+tm_shape( franklin ) + 
+  tm_polygons( alpha = 0.5, lwd=3 ) + 
+  tm_shape( schools ) + 
+  tm_dots()
+
 
 
