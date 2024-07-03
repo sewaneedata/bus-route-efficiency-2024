@@ -49,10 +49,11 @@ buses <- levels( bus_routes$Bus )
 for(bus in buses ){
   map <- map +
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
-    tm_dots(col = "Bus", size=0.1) +
-    tm_shape( schools ) + 
-    tm_dots(col = 'SCHOOL', id = 'SCHOOL')
+    tm_dots(col = "Bus", size=0.1) 
 }
+
+map = map +  tm_shape( schools ) + 
+  tm_dots(col = 'SCHOOL', id = 'SCHOOL')
 
 # Getting unique values of bus routes to unselect the layers by default. 
 bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
