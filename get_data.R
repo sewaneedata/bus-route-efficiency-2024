@@ -10,6 +10,7 @@ library(geodata)
 library(leaflet)
 
 # load bus routes data
+
 # Reads in the school data
 schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
 
@@ -25,8 +26,11 @@ load("data/bus_gis.RData")
 
 # Adding the longitude and latitude to the data frame
 bus_routes <- left_join( bus_points %>% select( Address = address, address_google, location_type, pnt ), bus_routes, by = "Address")
+
 # Converting the Bus numbers to characters
+
 bus_routes$Bus <- as.character( bus_routes$Bus )
+
 # Converting the Bus numbers to factors to enable automatic coloring on the map
 bus_routes$Bus <- factor( bus_routes$Bus, levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", 
                                                      "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", 
@@ -43,17 +47,19 @@ map <- tm_shape(franklin, name = "Franklin County Border") +
   tm_polygons(alpha = 0.5, lwd = 3) 
 
 
-# Get the levels of the bus routes data frame
+# Get the levels of the bus routes data frame.
 buses <- levels( bus_routes$Bus )
+
+# Adding school data to the bus route map.
+map <- map +  tm_shape( schools, name = 'Schools') + 
+  tm_dots(col = 'SCHOOL', id = 'SCHOOL', size = 0.1, palette= 'black', legend.show = FALSE)
+
 # The for loop is iterating through each bus and it is adding the bus routes to the map.
 for(bus in buses ){
   map <- map +
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
-    tm_dots(col = "Bus", size=0.1) 
+    tm_dots(col = "Bus", size = 0.05, legend.show = FALSE) 
 }
-
-map = map +  tm_shape( schools ) + 
-  tm_dots(col = 'SCHOOL', id = 'SCHOOL')
 
 # Getting unique values of bus routes to unselect the layers by default. 
 bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
