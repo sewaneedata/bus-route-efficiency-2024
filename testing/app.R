@@ -91,9 +91,21 @@ ui <- fluidPage(
     multiple = TRUE
   ),
   
+  tmapOutput('map'),
+
+  # Bus input
+  selectInput(
+    'bus',
+    'Select Buses to Show',
+    choices = unique(bus_routes$Bus),
+    multiple = TRUE
+  ),
+  
   tmapOutput('map')
   
+    
 )
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -102,7 +114,9 @@ server <- function(input, output) {
     tm_shape(franklin, name = "Franklin County Border") +
       tm_polygons(alpha = 0.5, lwd = 3) +
       tm_shape(schools %>% filter(SCHOOL %in% input$school), name = "Schools") +
-      tm_dots(col = 'SCHOOL',id = 'SCHOOL', size = 0.1)
+      tm_dots(col = 'SCHOOL',id = 'SCHOOL', size = 0.1) +
+      tm_shape(bus_routes %>% filter(Bus %in% input$bus), name = "Bus Routes") +
+      tm_dots(col = "Bus", size = 0.1)
   })
   
 }
