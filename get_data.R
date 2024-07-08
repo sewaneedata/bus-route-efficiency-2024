@@ -49,7 +49,6 @@ map <- tm_shape(franklin, name = "Franklin County Border") +
 
 # Get the levels of the bus routes data frame.
 buses <- levels( bus_routes$Bus )
-geom(map)
 
 # Adding school data to the bus route map.
 map <- map +  tm_shape( schools, name = 'Schools') +
