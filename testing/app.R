@@ -102,7 +102,7 @@ server <- function(input, output) {
     tm_shape(franklin, name = "Franklin County Border") +
       tm_polygons(alpha = 0.5, lwd = 3) +
       tm_shape(schools %>% filter(SCHOOL %in% input$school), name = "Schools") +
-      tm_dots(id = 'SCHOOL', size = 0.1)
+      tm_dots(col = 'SCHOOL',id = 'SCHOOL', size = 0.1)
   })
   
 }
