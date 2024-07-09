@@ -77,3 +77,10 @@ for (bus in buses) {
 # Convert to leaflet and display the map
 leaflet_map <- tmap_leaflet(map)
 leaflet_map
+
+
+# Getting unique values of bus routes to unselect the layers by default. 
+bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
+map %>% 
+  tmap_leaflet( ) %>%
+  hideGroup( bus_route_names ) 
