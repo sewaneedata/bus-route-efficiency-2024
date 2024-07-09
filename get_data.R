@@ -30,16 +30,26 @@ bus_routes <- left_join(bus_points %>% select(Address = address, address_google,
 # Convert Bus numbers to characters
 bus_routes$Bus <- as.character(bus_routes$Bus)
 
-#Counting the number of every kid on each bus and puting it into the dataset
+#Counting the number of every kid on each bus and putting it into the dataset
 bus_routes <- bus_routes %>%
   group_by(Bus) %>%
   mutate(num_kid_per_bus = n()) %>% 
   ungroup()
-
+#This will count the number of bus stops by removing repeat locations
 bus_routes <- bus_routes %>%
   group_by(Bus) %>%
   mutate(unq_add = n_distinct(Address)) %>%
   ungroup()
+#This shows the bus that could be overcrowded. 
+bus_over_48 <- bus_routes %>%
+  filter(num_kid_per_bus > 48) %>% 
+  distinct(Bus)
+print(bus_over_48)
+bus_routes_summary <- bus_routes %>%
+  group_by(Bus) %>%
+  summarize(num_kid_per_bus = n()) %>%
+  ungroup()
+
 # Convert Bus numbers to factors to enable automatic coloring on the map
 bus_routes$Bus <- factor(bus_routes$Bus, levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
                                                     "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
