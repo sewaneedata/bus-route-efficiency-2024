@@ -83,12 +83,12 @@ buses <- levels(bus_routes$Bus)
 for (bus in buses) {
   map <- map +
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
-    tm_dots(col = "Bus", size = 0.1, legend.show = FALSE)
+    tm_dots(col = "School", id = "Address", size = 0.1, legend.show = FALSE)
 }
 
 # Convert to leaflet and display the map
-leaflet_map <- tmap_leaflet(map)
-leaflet_map
+# leaflet_map <- tmap_leaflet(map)
+# leaflet_map
 
 
 # Getting unique values of bus routes to unselect the layers by default. 
