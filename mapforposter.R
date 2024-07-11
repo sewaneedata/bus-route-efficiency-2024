@@ -91,13 +91,13 @@ for (busi in 1:length(buses)) {
     tm_shape(bus_routes %>% filter(Bus == bus), name = paste0("Bus Route ", bus)) +
     tm_dots(col = colori, id = "Address", size = 0.1, legend.show = TRUE)
   
-  # Add lines in bus route
-  (bus_line <- bus_routes %>% filter(Bus == bus))
-  (bus_line <- as_Spatial(bus_line))
-  (bus_line <- as(bus_line, 'SpatialLines'))
-  map <- map + tm_shape(bus_line, name = paste0('Bus line ', bus, legend.show =TRUE)) + 
-    tm_lines(col = colori)
-}
+# Add lines in bus route
+   (bus_line <- bus_routes %>% filter(Bus == bus))
+   (bus_line <- as_Spatial(bus_line))
+   (bus_line <- as(bus_line, 'SpatialLines'))
+   map <- map + tm_shape(bus_line, name = paste0('Bus Line ', bus)) + 
+   tm_lines(col = colori)
+ }
 
 map
 # Convert to leaflet and display the map
@@ -110,3 +110,6 @@ bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
 map %>% 
   tmap_leaflet( ) %>%
   hideGroup( bus_route_names ) 
+  
+
+
