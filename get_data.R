@@ -178,24 +178,35 @@ bus_36 <- huntland_routes %>%
   filter(Bus == 36)%>% 
   mutate(order = case_when(
     Address == "196 Strope Ln 'Franklin County' TN"  ~1,
-    Address == "209 Kennedy Ln 'Franklin County' TN"  ~2,
-    Address == "2239 Hickory Grove Rd 'Franklin County' TN" ~3,
-    Address == "2105 Hickory Grove Rd 'Franklin County' TN" ~4
-    Address == "2045 Sugar Cove Rd 'Franklin County' TN" ~5,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
-    Address == ""  ~,
+    Address == "106 Old Beans Creek Rd 'Franklin County' TN" ~2,
+    Address == "209 Kennedy Ln 'Franklin County' TN"  ~3,
+    Address == "2239 Hickory Grove Rd 'Franklin County' TN" ~4,
+    Address == "2105 Hickory Grove Rd 'Franklin County' TN" ~5,
+    Address == "2045 Sugar Cove Rd 'Franklin County' TN" ~6,
+    Address == "280 George Hall Rd 'Franklin County' TN" ~7,
+    Address == "1150 Foster Ln 'Franklin County' TN"  ~8,
+    Address == "1047 Foster Ln 'Franklin County' TN"  ~9,
+    Address == "364 Foster Ln 'Franklin County' TN"  ~10,
+    Address == "229 Maxwell Rd 'Franklin County' TN"  ~11,
+    Address == "18 Maxwell Rd 'Franklin County' TN"  ~12,
+    Address == "46 Walnut Hill Rd 'Franklin County' TN"  ~13,
+    Address == "121 Beans Creek Rd 'Franklin County' TN"  ~14,
+    Address == "1777 Beans Creek Rd 'Franklin County' TN"  ~15,
+    Address == "1913 Beans Creek Rd 'Franklin County' TN"  ~16,
+    Address == "2396 Beans Creek Rd 'Franklin County' TN"  ~17,
+    Address == "2534 Beans Creek Rd 'Franklin County' TN"  ~18,
+    Address == "2160 Francisco Rd 'Franklin County' TN" ~ 19,
+    Address == "319 Alabama St 'Franklin County' TN" ~20,
+    Address == "206 Alabama St 'Franklin County' TN" ~21,
+TRUE~ NA
   ))
+
+# sort the points according to the turn-by-turn order in which students are picked up:
+bus_36 <- bus_36 %>% arrange( order )
+# create a line from the points:
+(bus36_line <- as( as_Spatial(bus_36), 'SpatialLines'))
+# make a map of the points and this line:
+tm_shape(bus36_line, name = paste0('Bus Line ', bus)) + 
+  tm_lines( lwd=2 ) +
+  tm_shape( bus_36 ) +
+  tm_dots()
