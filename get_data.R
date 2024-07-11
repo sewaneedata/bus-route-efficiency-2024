@@ -173,7 +173,7 @@ huntland_routes %>%
   arrange(unq_add) %>% 
   select(Bus, unq_add)
 
-
+# create an order column that says the order that buses visit the households in bus 36
 bus_36 <- huntland_routes %>% 
   filter(Bus == 36)%>% 
   mutate(order = case_when(
@@ -201,6 +201,7 @@ bus_36 <- huntland_routes %>%
 TRUE~ NA
   ))
 
+# create the map of bus 36
 # sort the points according to the turn-by-turn order in which students are picked up:
 bus_36 <- bus_36 %>% arrange( order )
 # create a line from the points:
