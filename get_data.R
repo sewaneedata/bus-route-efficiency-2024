@@ -10,22 +10,28 @@ library(leaflet)
 library(gsheet)
 library(dplyr)
 
-# Load bus routes data
+# Load bus routes data and edit it ##############################
 
-# Reads in the school data
+# Reads in the school names and addresses
 schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
 
 # Transforms the school data into long/lat coordinates.
 schools <- st_as_sf(schools, coords = c("LONG", "LAT"), crs = "EPSG:4326")
 
+# this loads in the location of each student 
 bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>%
+  # this was added to each address to keep all locations in Franklin County
   mutate(Address = paste0(Address, " 'Franklin County' TN"))
 
 # Load latitude and longitude data of addresses
 load("data/bus_gis.RData")
 
 # Add longitude and latitude to the data frame
-bus_routes <- left_join(bus_points %>% select(Address = address, address_google, location_type, pnt), bus_routes, by = "Address")
+bus_routes <- left_join(bus_points %>% 
+                          select(Address = address, 
+                                 address_google, 
+                                 location_type, 
+                                 pnt), bus_routes, by = "Address")
 
 # Convert Bus numbers to characters
 bus_routes$Bus <- as.character(bus_routes$Bus)
@@ -35,12 +41,20 @@ bus_routes <- bus_routes %>%
   group_by(Bus) %>%
   mutate(num_kid_per_bus = n()) %>% 
   ungroup()
+
 #This will count the number of bus stops by removing repeat locations
 bus_routes <- bus_routes %>%
   group_by(Bus) %>%
   mutate(unq_add = n_distinct(Address)) %>%
   ungroup()
-#This shows the bus that could be overcrowded. 
+
+
+
+
+# Make the map #########################
+
+#This shows the bus that could be overcrowded.
+# Overcrowded is defined by having more than 48 kids
 bus_over_48 <- bus_routes %>%
   filter(num_kid_per_bus > 48) %>% 
   distinct(Bus)
@@ -101,6 +115,13 @@ map %>%
 bus_routes <- bus_routes %>% 
   mutate(turn_by_turn = if_else(Bus %in% c(1,2,3,4,6,7,8,9,10,11,12,15,16,18,19,21,22,24,25,26,28,29,30,32,35,36,38,89,42,49,51,52,53,54),"yes","no"))
 
+
+
+
+
+# Mapping out bus routes with the turn by turn ##################
+
+
 #checking the number of buses that have a turn by turn
 bus_routes %>% 
   distinct(Bus, .keep_all = TRUE) %>% 
@@ -138,5 +159,43 @@ bus_28 <- bus_routes %>%
   ))
 
 
+# now we are looking at huntland routes that potentially could be combined
+# these bus routes are 9, 10, 16, 21, 36, and 22
+
+# make a dataset for these buses
+huntland_routes <- bus_routes %>% 
+  filter(Bus %in% c(9, 10, 16, 21, 36,22)) %>% 
+  filter(turn_by_turn == "yes")
+
+#find the shortest routes
+huntland_routes %>% 
+  distinct(Bus, .keep_all = TRUE) %>%
+  arrange(unq_add) %>% 
+  select(id, Bus, unq_add)
 
 
+bus_36 <- huntland_routes %>% 
+  filter(Bus == 36)%>% 
+  mutate(order = case_when(
+    Address == "196 Strope Ln 'Franklin County' TN"  ~1,
+    Address == "209 Kennedy Ln 'Franklin County' TN"  ~2,
+    Address == "2239 Hickory Grove Rd 'Franklin County' TN" ~3,
+    Address == "2105 Hickory Grove Rd 'Franklin County' TN" ~4
+    Address == "2045 Sugar Cove Rd 'Franklin County' TN" ~5,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+    Address == ""  ~,
+  ))
