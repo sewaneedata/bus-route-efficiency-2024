@@ -210,3 +210,4 @@ tm_shape(bus36_line, name = paste0('Bus Line ', bus)) +
   tm_lines( lwd=2 ) +
   tm_shape( bus_36 ) +
   tm_dots()
+
