@@ -133,7 +133,7 @@ bus_routes %>%
   filter(turn_by_turn == "yes") %>% 
   distinct(Bus, .keep_all = TRUE) %>%
   arrange(unq_add) %>% 
-  select(id, Bus, unq_add)
+  select(Bus, unq_add)
  
 # we will look at bus 28 due to it being short and having a turn by turn for testing
 bus_28 <- bus_routes %>% 
@@ -171,7 +171,7 @@ huntland_routes <- bus_routes %>%
 huntland_routes %>% 
   distinct(Bus, .keep_all = TRUE) %>%
   arrange(unq_add) %>% 
-  select(id, Bus, unq_add)
+  select(Bus, unq_add)
 
 
 bus_36 <- huntland_routes %>% 

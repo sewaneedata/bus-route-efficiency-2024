@@ -51,4 +51,7 @@ map %>%
   tmap_leaflet( ) %>%
   hideGroup( bus_route_names ) 
 
-
+# Getting unique values of bus routes to unselect the layers by default. 
+bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
+map %>% 
+  
