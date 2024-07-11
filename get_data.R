@@ -96,3 +96,47 @@ bus_route_names <- unique( paste0( "Bus Route ", bus_routes$Bus ) )
 map %>% 
   tmap_leaflet( ) %>%
   hideGroup( bus_route_names ) 
+
+#making a column that says if there is a turn by turn document
+bus_routes <- bus_routes %>% 
+  mutate(turn_by_turn = if_else(Bus %in% c(1,2,3,4,6,7,8,9,10,11,12,15,16,18,19,21,22,24,25,26,28,29,30,32,35,36,38,89,42,49,51,52,53,54),"yes","no"))
+
+#checking the number of buses that have a turn by turn
+bus_routes %>% 
+  distinct(Bus, .keep_all = TRUE) %>% 
+  group_by(turn_by_turn) %>% 
+  tally()
+
+#pick the bus route that has a turn by turn and the least number of stops
+bus_routes %>% 
+  filter(turn_by_turn == "yes") %>% 
+  distinct(Bus, .keep_all = TRUE) %>%
+  arrange(unq_add) %>% 
+  select(id, Bus, unq_add)
+ 
+# we will look at bus 28 due to it being short and having a turn by turn for testing
+bus_28 <- bus_routes %>% 
+  filter(Bus == 28) %>% 
+  mutate(order = case_when(
+    Address == "221 Huckleberry Ln 'Franklin County' TN" ~1,
+    Address == "50 Circle E Ln 'Franklin County' TN" ~2,
+    Address == "Circle E Guest Ranch 'Franklin County' TN" ~3,
+    Address == "541 Iron Gap Rd 'Franklin County' TN" ~ 4, 
+    Address == "Old Shook Rd 'Franklin County' TN"~5,
+    Address == "2730 Keith Springs Mt. Rd 'Franklin County' TN"~6,
+    Address == "21 Foggy Mt. Ln 'Franklin County' TN"~7,
+    Address == "4858 Keith Springs Mt. Rd 'Franklin County' TN"~8,
+    Address == "110 Pinon Ln 'Franklin County' TN"~9, #this needs to be pinion
+    Address == "Keith Springs Mt. Rd 'Franklin County' TN"~10,
+    Address == "Keith Springs Mt.Copperhead Rd 'Franklin County' TN" ~11,
+    Address == "Keith Springs  Mt. Copperhead Rd 'Franklin County' TN" ~11,#one is missing a space 
+    Address == "4185 Keith Springs Mt. Rd 'Franklin County' TN" ~12,
+    Address == "Clark Memorial"~13,#we need to add this
+    Address == "Franklin County High School"~14,#we need to add this
+    Address == "South Middle School"~15,#we need to add this
+    TRUE ~ NA
+  ))
+
+
+
+
