@@ -198,7 +198,8 @@ bus_36 <- huntland_routes %>%
     Address == "2160 Francisco Rd 'Franklin County' TN" ~ 19,
     Address == "319 Alabama St 'Franklin County' TN" ~20,
     Address == "206 Alabama St 'Franklin County' TN" ~21,
-TRUE~ NA
+    Address == "400 Gore St 'Franklin County' TN" ~22,
+    TRUE~ NA
   ))
 
 # create the map of bus 36
@@ -211,4 +212,56 @@ tm_shape(bus36_line, name = paste0('Bus Line ', bus)) +
   tm_lines( lwd=2 ) +
   tm_shape( bus_36 ) +
   tm_dots()
+ 
+# create an order column that says the order that buses visit the households in bus 10
+# Important: Elora Rd = Old Hwy 122
+bus_10 <- huntland_routes %>%
+  filter(Bus == 10)%>%
+  mutate(order = case_when(
+    Address == "202 Lucas St 'Franklin County' TN" ~1,
+    Address == "202 Old Hwy 122 'Franklin County' TN" ~2,
+    Address == "58 Stewart Rd 'Franklin County' TN"  ~3,
+    Address == "961 Old Hwy 122 'Franklin County' TN" ~4,
+    Address == "1152 Old Hwy 122 'Franklin County' TN" ~5,
+    Address == "1325 Old Hwy 122 'Franklin County' TN" ~6,
+    Address == "475 Greasy Cove Rd 'Franklin County' TN" ~8,
+    Address == "309 Stovall Rd 'Franklin County' TN" ~9,
+    Address == "245 Stovall Rd 'Franklin County' TN"  ~10,
+    Address == "2036 Old Hwy 122 'Franklin County' TN" ~11,
+    Address == "2082 Old Hwy 122 'Franklin County' TN"  ~11,
+    Address == "1096 Stewart Rd 'Franklin County' TN"  ~12,
+    Address == "185 Burdette Rd 'Franklin County' TN"  ~13,
+    Address == "731 Stewart Rd 'Franklin County' TN"  ~14,
+    Address == "2701 Old Hwy 122 'Franklin County' TN"  ~15,
+    Address == "2941 Old Hwy 122 'Franklin County' TN"  ~16,
+    Address == "2196 McClure Cemetery Rd 'Franklin County' TN"  ~17,
+    Address == "1475 McClure Cemetery Rd 'Franklin County' TN"  ~18,
+    Address == "3178 John Hunter Hwy 'Franklin County' TN" ~ 19,
+    Address == "4114 John Hunter Hwy 'Franklin County' TN" ~20,
+    Address == "1001 County Line Rd S 'Franklin County' TN" ~21,
+    Address == "1022 Donaldson Groove Rd 'Franklin County' TN" ~22,
+    Address == "488 Campbell Ln 'Franklin County' TN" ~23,
+    Address == "658 Limestone Rd 'Franklin County' TN" ~24,
+    Address == "228 Limestone Rd 'Franklin County' TN" ~25,
+    Address == "575 McClure Cemetery Rd 'Franklin County' TN" ~26,
+    Address == "15499 David Crockett Hwy 'Franklin County' TN" ~27,
+    Address == "94 Lakeland Ct 'Franklin County' TN" ~28,
+    Address == "400 Gore St 'Franklin County' TN" ~29,
+    TRUE~ NA
+  ))
+
+# create the map of bus 10
+# sort the points according to the turn-by-turn order in which students are picked up:
+bus_10 <- bus_10 %>% arrange( order )
+# create a line from the points:
+(bus10_line <- as( as_Spatial(bus_10), 'SpatialLines'))
+# make a map of the points and this line:
+tm_shape(bus10_line, name = paste0('Bus Line ', bus)) +
+  tm_lines( lwd=2 ) +
+  tm_shape( bus_10 ) +
+  tm_dots()
+
+
+# Important: Bus Route 9 has missing data!!!!
+# Ask Nika for help with Bus Route 9. 
 
