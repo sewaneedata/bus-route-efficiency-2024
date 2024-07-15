@@ -103,6 +103,11 @@ bus_mapper <- function(bus_data){
   map <- tm_shape(franklin, name = "Franklin County Border") +
     tm_polygons(alpha = 0.5, lwd = 3)
 
+  # Get schools addresses and assign a color
+ # unique_school_col <- bus_data %>% filter(`type` == "school")
+ # 
+ #  unq_school_col <- unique(unique_school_col$address)
+ #  
   # Add bus routes to the map
   (buses <- unique(bussf$bus_route) %>% as.character)
   pal <- colorRampPalette(colors = c('red', 'yellow', 'green', 'blue', 'violet'))

@@ -24,6 +24,11 @@ make_css <- function() {
   body {
     font-family: 'Times New Roman', sans-serif;
   }
+  
+  h4 {
+    font-family: 'Garamond', sans-serif;
+  }
+  
   .title {
     font-family: 'Times New Roman', serif;
     font-size: 24px;
@@ -157,6 +162,7 @@ server <- function(input, output) {
   })
 
 }
+
 
 ################################################################################
 # LAUNCH APP
