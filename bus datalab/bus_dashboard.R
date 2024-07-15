@@ -1,15 +1,23 @@
 library(shiny)
 library(DT)
 library(sfheaders)
+library(tidyverse)
+library(leaflet)
+library(tmap)
+library(gsheet)
+library(tidygeocoder)
+library(terra)
 
 # Source functions code
-source('bus datalab/bus_functions.R')
+source('bus_functions.R')
 
+# Generating the default dataset
+source('bus_default_dataset.R')
 # Load default dataset
-load('bus datalab/bus_default_data.rds') # dataset name is bus_data
+load('bus_default_data.rds') # dataset name is bus_data
 
-# Load dataset provided to us
-load('bus datalab/bus_routes_provided.rds')
+# Load dataset provided to us - generated in z/bus_scratch.R but when it is run again the updated info breaks the map on the "Database provided to us" tab
+load('bus_routes_provided.rds')
 bus_provided <-
   bus_provided %>%
   rename(bus_route = route) %>%

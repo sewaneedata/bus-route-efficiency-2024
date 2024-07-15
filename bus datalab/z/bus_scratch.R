@@ -9,7 +9,7 @@ library(gsheet)
 # practice url
 # https://docs.google.com/spreadsheets/d/11ak0g0lD4wstiQfWhGnYeVxSZlL01Bw5VEpg0CpLhTM/edit?usp=sharing'
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 
 if(FALSE){

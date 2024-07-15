@@ -1,7 +1,7 @@
 # Process & save default dataset
 
 # source functions
-source('bus datalab/bus_functions.R')
+source('bus_functions.R')
 
 # example url
 url <- 'https://docs.google.com/spreadsheets/d/1MubRFGO4eIxN1aCQOBe3REAye525-wzqOIzaTYIIg4I/edit?usp=sharing'
@@ -19,4 +19,4 @@ bus_data
 bus_mapper(bus_data)
 
 # save it
-save(bus_data, file = 'bus datalab/bus_default_data.rds')
+save(bus_data, file = 'bus_default_data.rds')
