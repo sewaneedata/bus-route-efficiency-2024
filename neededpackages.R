@@ -14,7 +14,7 @@ required_Packages <- c(
   "tidycensus",
   "tidygeocoder",
   "tidyverse",
-  "tmap",
+  "tmap"
 )
 
 # Installing the required packages
