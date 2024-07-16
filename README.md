@@ -2,28 +2,28 @@
 
 ## Setup
 
-1. Install Rstudio (Learn how to do that [here](https://github.com/git-guides/install-git)).
-2. Create a file that will hold all the files for this project
-2. Open R studio and click the little icon with a r in a cube on the top left
-3. Then press Version Control
-4. Then press Git
-5. Now in Github find the repository and go to the code tab
-6. Press the green code button and copy the URL
-7. Paste the URL in the repository URL selection
-8. You can either leave the Project directory name blank to auto fill or add whatever you want to name it then press create project
-9. Open the neededpackages.R then run it
-10. Open addresses.R
-11. Enter a google api key where it says YOUR GOOGLE MAPS API KEY GOES HERE! on line 17, and run it (you can get a geocoding API [here](https://developers.google.com/maps/documentation/geocoding/get-api-key))
-12. Download franklin_county.rds and put it in a file called data that is in the file that is holding all the files for this.
-13.Then open bus_funtions.R and run it
-14.Then open get_data.R and run it
+1. Install `RStudio` (Learn how to do that [here](https://github.com/git-guides/install-git)).
+2. Create a file that will hold all the files for this project.
+2. Open `Rstudio` and click the little icon with a r in a cube on the top left.
+3. Then press Version Control.
+4. Then press Git.
+5. Now in Github find the repository and go to the code tab.
+6. Press the green code button and copy the URL.
+7. Paste the URL in the repository URL selection.
+8. You can either leave the Project directory name blank to auto fill or add whatever you want to name it then press create project.
+9. Open the `neededpackages.R` then run it.
+10. Open `addresses.R`.
+11. Enter a google api key where it says YOUR GOOGLE MAPS API KEY GOES HERE! on line 17, and run it (you can get a geocoding API [here](https://developers.google.com/maps/documentation/geocoding/get-api-key)).
+12. Download `franklin_county.rds` and put it in a file called data that is in the file that is holding all the files for this.
+13.Then open `bus_funtions.R` and run it.
+14.Then open `get_data.R` and run it.
   
 ## How to Run the App
 
-1. Open the file dashboard
-2. Open app.R
-3. Set your working directory to the Dashboard folder within the repository folder
-4. Then press Run App
+1. Open the file dashboard.
+2. Open `app.R`.
+3. Set your working directory to the Dashboard folder within the repository folder.
+4. Then press Run App.
 
 ## Description of the Files
 
@@ -36,3 +36,5 @@
 7. bus_routes.rds - this has the bus route information like the kids grade, bus number, house address, longitude and latitude, and reported miles. 
 8. app.R - This is where the dashboard with the user input and server is made. 
 
+## Notes
+1. The data for this is from the url entered on the dashboard so that will be the data in teh files in the data folder that you have input other than the `franklin_county.rds`.
