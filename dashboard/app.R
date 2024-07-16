@@ -8,6 +8,7 @@ library(gsheet)
 library(tidygeocoder)
 library(terra)
 library(sf)
+library(bslib)
 
 # Source functions code
 source('../bus_functions.R')
@@ -36,36 +37,46 @@ bus_provided <-
 
 ################################################################################
 #making a css for fonts and styles
-make_css <- function() {
-  css <- "
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-  body {
-    font-family: 'Times New Roman', sans-serif;
-  }
-
-  h4 {
-    font-family: 'Garamond', sans-serif;
-  }
-
-  .title {
-    font-family: 'Times New Roman', serif;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  .custom-text {
-    font-family: 'Courier New', monospace;
-  }
-  "
-  return(css)
-}
+#' make_css <- function() {
+#'   css <- "
+#'   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+#'   
+#'   
+#'   h2{ 
+#'   font-family: 'Times New Roman', sans-serif;
+#'   }
+#'   h5{
+#'   font-family: 'Garamond', serif;
+#'   }
+#' 
+#'   h4 {
+#'     font-family: 'Courier New', sans-serif;
+#'   }
+#' 
+#'   .title {
+#'     font-family: 'Times New Roman', serif;
+#'     font-size: 24px;
+#'     font-weight: bold;
+#'   }
+#'   .custom-text {
+#'     font-family: 'Courier New', monospace;
+#'   }
+#'   "
+#'   return(css)
+#' }
 
 ################################################################################
 # UI
 
-ui <- fluidPage(
-  tags$head(
-    tags$style(HTML(make_css()))),
-  fluidRow(column(12, h2('Starting point for bus dashboard'))),
+ui <- page_navbar(
+  
+  theme = bs_theme(bootswatch = 'flatly'),
+  
+  
+  
+  # tags$head(
+  #   tags$style(HTML(make_css()))),
+  fluidRow(column(12, h2('Bus Routes of Franklin County Schools'))),
   br(),
   tabsetPanel(
     tabPanel(h4('New database'),
@@ -107,15 +118,83 @@ ui <- fluidPage(
     ),
     tabPanel(h4('About', class = "body"),
              br(), br(),
-             'BreAsia Calhoun, The Univeristy of the South',br(),
-             'Mason Dickens, The Univeristy of the South', br(),
-             'Shiraz Robinson, II University of Maryland', br(),
-             'Srijan Basnet, The Univeristy of the South',br(),
-             'Tuyen Le, The Univeristy of the South',br(),
-             'Mission statement: We will work with the Franklin County Schools to assess the efficiency of bus routes and drivers and devise pathways for them to improve and utilize their system more effectively.
-')
-  )
-)
+             fluidRow(
+               column(2),
+               column(
+                 3,
+                 fluidRow(
+                   tags$img(src = 'Jan.jpeg', width = "75%", alt = "Picture of Jan", align = "center")
+                 ),
+                 fluidRow(
+                   p('Jan Davis, Franklin County School District\nTransportation Administrative Assistant P/T', align = "center")
+                 )
+               ),
+               column(2),
+               column(
+                 3,
+                 fluidRow(
+                   tags$img(src = 'Jeff.jpeg', width = "75%", alt = "Picture of Jeff", align = "center")
+                 ),
+                 fluidRow(
+                   p('Jeff Sons, Franklin County School District\nTransportation Director', align = "center")
+                 )
+             ),
+             column(2)
+             ),
+             fluidRow(
+               column(1),
+               column(
+                 2,
+                 fluidRow(
+                   tags$img(src = 'BreAsia.jpg', width = "75%", alt = "Picture of BreAsia", align = "center")
+                 ),
+                 fluidRow(
+                   p('BreAsia Calhoun, University of the South', align = "center")
+                 )
+               ),
+               column(
+                 2,
+                 fluidRow(
+                   tags$img(src = 'Mason.jpg', width = "75%", alt = "Picture of Mason", align = "center")
+                 ),
+                 fluidRow(
+                   p('Mason Dickens, University of the South', align = "center")
+                 )
+               ),
+               column(
+                 2,
+                 fluidRow(
+                   tags$img(src = 'Shiraz.jpg', width = "75%", alt = "Picture of Shiraz", align = "center")
+                 ),
+                 fluidRow(
+                   p('Shiraz Robinson II, University of Maryland', align = "center")
+                 )
+               ),
+               column(
+                 2,
+                 fluidRow(
+                   tags$img(src = 'Srijan.jpg', width = "75%", alt = "Picture of Srijan", align = "center")
+                 ),
+                 fluidRow(
+                   p('Srijan Basnet, University of the South', align = "center")
+                 )
+               ),
+               column(
+                 2,
+                 fluidRow(
+                   tags$img(src = 'Tuyen.png', width = "85%", alt = "Picture of Tuyen", align = "center")
+                 ),
+                 fluidRow(
+                   p('Tuyen Le, University of the South', align = "center")
+                 )
+               ),
+               column(1)
+             ),
+             br(),
+             div(strong('Background:'), p('Franklin County public schools manage 32 buses for 1,779 K-12 students across 39 routes, employing 28 contracted drivers for 11 schools. Due to driver shortages, some run double routes, and all drivers handle dispersed home pickups, being compensated for up to 110 miles daily. Challenges include increased student numbers from new housing developments, a shortage of both regular and special education drivers, and capacity limits, all managed by only two people in the Department. Buses struggle with overcrowding, longer routes due to more stops, and adherence to a 90-minute transit limit, further complicated by communication issues with parents and illegal actions by other drivers at student drop-offs. Additionally, incomplete maps hinder route planning. The Department seeks our analysis to propose more efficient routes meeting three criteria: safe transit within the 90-minute limit, doorstep pickups to avoid traffic hazards, and accommodating growing student numbers due to new constructions. They need our help to optimize these routes ahead of the new school term in August, addressing connectivity and capacity challenges efficiently.')
+               )
+)))
+
 
 ################################################################################
 # SERVER
@@ -214,3 +293,4 @@ server <- function(input, output) {
 # LAUNCH APP
 
 shinyApp(ui = ui, server = server)
+
