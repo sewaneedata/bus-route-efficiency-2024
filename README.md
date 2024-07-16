@@ -37,4 +37,8 @@
 8. app.R - This is where the dashboard with the user input and server is made. 
 
 ## Notes
-1. The data for this is from the url entered on the dashboard so that will be the data in teh files in the data folder that you have input other than the `franklin_county.rds`.
+1. The data used for this comes from the URL entered on the dashboard. This will be the data in the files within the data folder, excluding `franklin_county.rds.`  
+
+
+
+
