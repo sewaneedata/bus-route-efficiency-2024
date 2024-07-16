@@ -24,7 +24,7 @@ bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy
   mutate(Address = paste0(Address, " 'Franklin County' TN"))
 
 # Load latitude and longitude data of addresses
-load("data/bus_gis.RData")
+load("data/new_bus_gis.RData")
 
 # Add longitude and latitude to the data frame
 bus_routes <- left_join(bus_points %>% 
@@ -208,7 +208,7 @@ bus_36 <- bus_36 %>% arrange( order )
 # create a line from the points:
 (bus36_line <- as( as_Spatial(bus_36), 'SpatialLines'))
 # make a map of the points and this line:
-map <- map %>% 
+
 tm_shape(bus36_line, name = paste0('Bus Line ', bus)) + 
   tm_lines( lwd=2 ) +
   tm_shape( bus_36 ) +
@@ -318,7 +318,7 @@ bus_10 <- huntland_routes %>%
 bus_10 <- bus_10 %>% arrange( order )
 # create a line from the points:
 (bus10_line <- as( as_Spatial(bus_10), 'SpatialLines'))
-map <- map %>% 
+
 # make a map of the points and this line:
 tm_shape(bus10_line, name = paste0('Bus Line ', bus)) +
   tm_lines( lwd=2 ) +
