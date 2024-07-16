@@ -11,7 +11,12 @@ us <- st_as_sf( us )
 franklin <- us %>% filter( NAME_1 == "Tennessee", NAME_2 == "Franklin")
 bbox <- st_bbox( franklin )
 
+
+
+# CHANGE THIS STRING TO YOUR GOOGLE MAPS API KEY!!!!!!!
 key <- "YOUR GOOGLE MAPS API KEY GOES HERE!"
+
+
 
 bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>% 
   mutate( Address = paste0( Address, " 'Franklin County' TN" ) )
@@ -27,4 +32,7 @@ tm_shape( franklin ) +
   tm_shape( bus_points ) +
   tm_dots( id = "Address" )
 
-save( bus_points, franklin, file="bus_gis.RData" )
+
+# Saving the GIS data to an RData file
+dir.create("data", showWarnings = FALSE)
+save( bus_points, franklin, file="data/bus_gis.RData" )

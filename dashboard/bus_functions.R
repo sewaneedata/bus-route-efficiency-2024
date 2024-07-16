@@ -54,7 +54,7 @@ bus_data_process <- function(url){
 # Check validity
 
 bus_validity_check <- function(bus_data){
-  load('franklin_county.rds')
+  load('../data/franklin_county.rds')
 
   # Add row id
   busi <- bus_data
@@ -90,7 +90,11 @@ bus_mapper <- function(bus_data){
 
   # Filter out invalid rows
   bus_data <- bus_data %>% filter(valid == TRUE)
-  bussf <- sf::st_as_sf(bus_data, coords = c('x','y'))
+  if(! 'sf' %in% class(bus_data)){
+    bussf <- sf::st_as_sf(bus_data, coords = c('x','y'))
+  }else{
+    bussf <- bus_data
+  }
 
   # Re-produce tmap with lines connected in order
   # Make the map interactive
@@ -99,7 +103,7 @@ bus_mapper <- function(bus_data){
   tmap_options(basemaps = providers$OpenStreetMap)
 
   # Create the base map with Franklin County Border
-  load('franklin_county.rds')
+  load('../data/franklin_county.rds')
   map <- tm_shape(franklin, name = "Franklin County Border") +
     tm_polygons(alpha = 0.5, lwd = 3)
 
@@ -110,9 +114,10 @@ bus_mapper <- function(bus_data){
  #  
   # Add bus routes to the map
   (buses <- unique(bussf$bus_route) %>% as.character)
+  (buses <- buses[!is.na(buses)])
   pal <- colorRampPalette(colors = c('red', 'yellow', 'green', 'blue', 'violet'))
   (bus_colors <- pal(length(buses)))
-  busi = 1
+  busi = 20
   for (busi in 1:length(buses)) {
     (bus <- buses[busi])
     colori <- bus_colors[busi]
@@ -134,12 +139,14 @@ bus_mapper <- function(bus_data){
       tm_shape(bus_map, name = paste0("Bus Route ", bus)) +
       tm_dots(col = colori, id = "Address", size = 0.1, legend.show = TRUE)
 
-    # Add lines in bus route
-    (bus_line <- as_Spatial(bus_map))
-    (bus_line <- as(bus_line, 'SpatialLines'))
-    map <- map +
-      tm_shape(bus_line, name = paste0('Bus Route ', bus)) +
-      tm_lines(col = colori)
+    if(nrow(bus_map)>1){
+      # Add lines in bus route
+      (bus_line <- as_Spatial(bus_map))
+      (bus_line <- as(bus_line, 'SpatialLines'))
+      map <- map +
+        tm_shape(bus_line, name = paste0('Bus Route ', bus)) +
+        tm_lines(col = colori)
+    }
   }
 
   return(map)

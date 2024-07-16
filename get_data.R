@@ -8,7 +8,37 @@ library(mapsapi)
 library(geodata)
 library(leaflet)
 library(gsheet)
-library(dplyr)
+
+# Getting useful functions
+source("bus_functions.R")
+
+# Creating the data folder if it doesn't exist
+dir.create("data", showWarnings = FALSE)
+
+######################################################
+# Generating the default bus routes for the dashboard:                         
+######################################################
+
+# example url
+url <- 'https://docs.google.com/spreadsheets/d/17nlhuhHIJszz3BrtW0-c-K-Wn82iueSdns0d_XekANA/edit?gid=0#gid=0'
+
+# re-process data
+bus_data <- bus_data_process(url)
+
+# validity check
+bus_data <- bus_validity_check(bus_data)
+
+# check it out
+bus_data
+
+# Test map
+bus_mapper(bus_data)
+
+# save it
+save(bus_data, file = 'data/bus_default_data.rds')
+
+################################################################################
+
 
 # Load bus routes data and edit it ##############################
 
@@ -24,7 +54,7 @@ bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy
   mutate(Address = paste0(Address, " 'Franklin County' TN"))
 
 # Load latitude and longitude data of addresses
-load("data/new_bus_gis.RData")
+load("data/bus_gis.RData")
 
 # Add longitude and latitude to the data frame
 bus_routes <- left_join(bus_points %>% 
@@ -35,6 +65,9 @@ bus_routes <- left_join(bus_points %>%
 
 # Convert Bus numbers to characters
 bus_routes$Bus <- as.character(bus_routes$Bus)
+
+# Save as RDS
+save(bus_routes, file='data/bus_routes.rds')
 
 #Counting the number of every kid on each bus and putting it into the dataset
 bus_routes <- bus_routes %>%

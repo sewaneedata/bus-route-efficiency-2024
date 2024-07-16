@@ -9,6 +9,8 @@ required_Packages <- c("shiny",
                       "crsmeta", 
                       "tidygeocoder",
                       "gsheet",
-                      "terra")
+                      "terra",
+                      "swfscDAS",
+                      "sf")
 
 install.packages(required_Packages)

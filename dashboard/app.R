@@ -7,23 +7,33 @@ library(tmap)
 library(gsheet)
 library(tidygeocoder)
 library(terra)
+library(sf)
 
 # Source functions code
 source('bus_functions.R')
 
-# Generating the default dataset
-source('bus_default_dataset.R')
-# Load default dataset
-load('bus_default_data.rds') # dataset name is bus_data
+# To re-generate the below datasets, un-comment and run the following line
+# source('../get_data.R')
 
-# Load dataset provided to us - generated in z/bus_scratch.R but when it is run again the updated info breaks the map on the "Database provided to us" tab
-load('bus_routes_provided.rds')
+# Load default dataset
+load('../data/bus_default_data.rds') # dataset name is bus_data
+
+# Loading the bus route dataset
+load('../data/bus_routes.rds')
+
+
+# Prep data for provided bus routes ============================================
+
+bus_provided <- bus_routes
+rm(bus_routes)
+
 bus_provided <-
   bus_provided %>%
-  rename(bus_route = route) %>%
+  rename(bus_route = Bus) %>%
   rowwise() %>%
-  mutate(valid = ifelse(any(c(is.na(x), is.na(y))), FALSE, TRUE)) %>%
+  mutate(valid = TRUE) %>%  
   ungroup()
+
 ################################################################################
 #making a css for fonts and styles
 make_css <- function() {
