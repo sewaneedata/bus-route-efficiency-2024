@@ -10,7 +10,7 @@ library(terra)
 library(sf)
 
 # Source functions code
-source('bus_functions.R')
+source('../bus_functions.R')
 
 # To re-generate the below datasets, un-comment and run the following line
 # source('../get_data.R')

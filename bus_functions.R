@@ -54,7 +54,15 @@ bus_data_process <- function(url){
 # Check validity
 
 bus_validity_check <- function(bus_data){
-  load('data/franklin_county.rds')
+  # If the dashboard is being run, which sets the workign directory to the dashboard folder
+  if(grepl("dashboard", dirname(rstudioapi::getSourceEditorContext()$path))) {
+    # Then go back a folder before going into the data folder to load the file
+    load('../data/franklin_county.rds')
+  } else {
+    # Otherwise, the working directory should be the main project folder and this should work
+    load('data/franklin_county.rds')
+  }
+  
 
   # Add row id
   busi <- bus_data
@@ -103,7 +111,15 @@ bus_mapper <- function(bus_data){
   tmap_options(basemaps = providers$OpenStreetMap)
 
   # Create the base map with Franklin County Border
-  load('data/franklin_county.rds')
+  
+  # If the dashboard is being run, which sets the workign directory to the dashboard folder
+  if(grepl("dashboard", dirname(rstudioapi::getSourceEditorContext()$path))) {
+    # Then go back a folder before going into the data folder to load the file
+    load('../data/franklin_county.rds')
+  } else {
+    # Otherwise, the working directory should be the main project folder and this should work
+    load('data/franklin_county.rds')
+  }
   map <- tm_shape(franklin, name = "Franklin County Border") +
     tm_polygons(alpha = 0.5, lwd = 3)
 

@@ -1,16 +1,21 @@
-###readME
+# The required packages to run the scripts in this repo
+required_Packages <- c(
+  "DT",
+  "dplyr",
+  "geodata",
+  "gsheet",
+  "leaflet",
+  "mapsapi",
+  "osmdata",
+  "sf",
+  "sfheaders",
+  "shiny",
+  "terra",
+  "tidycensus",
+  "tidygeocoder",
+  "tidyverse",
+  "tmap",
+)
 
-required_Packages <- c("shiny",
-                      "DT",
-                      "sfheaders",
-                      "tidyverse", 
-                      "tmap",
-                      "leaflet",
-                      "crsmeta", 
-                      "tidygeocoder",
-                      "gsheet",
-                      "terra",
-                      "swfscDAS",
-                      "sf")
-
+# Installing the required packages
 install.packages(required_Packages)
