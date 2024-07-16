@@ -54,7 +54,7 @@ bus_data_process <- function(url){
 # Check validity
 
 bus_validity_check <- function(bus_data){
-  load('bus datalab/franklin_county.rds')
+  load('franklin_county.rds')
 
   # Add row id
   busi <- bus_data
@@ -99,7 +99,7 @@ bus_mapper <- function(bus_data){
   tmap_options(basemaps = providers$OpenStreetMap)
 
   # Create the base map with Franklin County Border
-  load('bus datalab/franklin_county.rds')
+  load('franklin_county.rds')
   map <- tm_shape(franklin, name = "Franklin County Border") +
     tm_polygons(alpha = 0.5, lwd = 3)
 
