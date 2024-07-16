@@ -1,6 +1,6 @@
 # bus-route-efficiency-2024
 
-##Setup
+## Setup
 
 1. Install Rstudio (Learn how to do that [here](https://github.com/git-guides/install-git)).
 2. Create a file that will hold all the files for this projector 
