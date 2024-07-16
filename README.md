@@ -5,7 +5,7 @@
 
 1. Install Rstudio (Learn how to do that [here](https://github.com/git-guides/install-git)).
 2. Create a file that will hold all the files for this projector 
-2. Open R studio and click the little icon with a r in a cube on the top left
+2. Press the file button on the top left and then click new project
 3. Then press Version Control
 4. Then hit Git
 5. Now in Github find the repository and go to the code tab
