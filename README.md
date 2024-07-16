@@ -1,4 +1,4 @@
-# bus-route-efficiency-2024
+# Bus-Route-Efficiency-2024
 
 ## Setup
 
