@@ -14,7 +14,8 @@ required_Packages <- c(
   "tidycensus",
   "tidygeocoder",
   "tidyverse",
-  "tmap"
+  "tmap",
+  "bslib"
 )
 
 # Installing the required packages
