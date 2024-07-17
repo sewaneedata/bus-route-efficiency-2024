@@ -2,7 +2,7 @@
 
 ## Description of the Files
 
-1. `addresses.R` - This takes the Google sheet addresses, geocodes them using the Google Maps API, and saves them in the `bus_gis.RData` file. This script requires a paid Google Maps API key and takes a while to run. `bus_gis.RData` has the latitudes and longitudes required for the final product. This takes a long time to download, the link for `bus_gis.RData` can be found [here](https://drive.google.com/file/d/1kl8nvWYXfcdH9jsDdYwMavAX3lSkdOnm/view?usp=sharing).
+1. `addresses.R` - This takes the Google sheet addresses, geocodes them using the Google Maps API, and saves them in the `bus_gis.RData` file. This script requires a paid Google Maps API key and takes a while to run. `bus_gis.RData` has the latitudes and longitudes required for the final product. Since the script takes a long time to run, the `bus_gis.RData` file (generated on 07/17/2024) can be downloaded via [this link](https://drive.google.com/file/d/1kl8nvWYXfcdH9jsDdYwMavAX3lSkdOnm/view?usp=sharing) if you have access.
 2. `franklin_county.rds` - This has the geodata to draw the border of Franklin County in maps. * This is the only part that has to be downloaded outside of the repository. The link to `franklin_county.rds` can be found [here](https://drive.google.com/file/d/1FceRqZVVa3RhJmYRs1GRqeL69NRMsQ-h/view?usp=sharing). 
 3. `bus_functions.R`- This creates functions that are used in `get_data.R` and in `app.R`
 4. `get_data.R` - This file generates the data files `bus_default_data.rds` and `bus_routes.rds`, which contain whether or not the bus information is valid by checking for a longitude, latitude, and address; Google Maps address; location type; and geolocation for every address.
