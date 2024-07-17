@@ -11,9 +11,9 @@
 7. Press the green code button and copy the URL.
 8. Paste the URL in the repository URL selection.
 9. You can either leave the Project directory name blank to auto fill or add whatever you want to name it then press create project.
-10. Open the `neededpackages.R` then run it.
+10. Open the `neededpackages.R` then run it. To run a script, click the source button in the top right of the file viewer window.
 11. Open `addresses.R`.
-12. Enter a google api key, which you can get [here](https://developers.google.com/maps/documentation/geocoding/get-api-key), where it says "YOUR GOOGLE MAPS API KEY GOES HERE!" on line 17, and run it. To run a script, click the source button in the top right of the file viewer window.
+12. Enter a google api key, which you can get [here](https://developers.google.com/maps/documentation/geocoding/get-api-key), where it says "YOUR GOOGLE MAPS API KEY GOES HERE!" on line 17, and run it.
 13. Download `franklin_county.rds` and put it in a folder called `data` in the same folder as the scripts.
 14. Then open `bus_funtions.R` and run it.
 15. Then open `get_data.R` and run it.
