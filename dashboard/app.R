@@ -70,7 +70,7 @@ bus_provided <-
 
 ui <- page_navbar(
   
-  theme = bs_theme(bootswatch = 'flatly'),
+  theme = bs_theme(bootswatch = 'lux'),
   
   
   
@@ -79,6 +79,12 @@ ui <- page_navbar(
   fluidRow(column(12, h2('Bus Routes of Franklin County Schools'))),
   br(),
   tabsetPanel(
+    tabPanel(h4("Home Page"),
+    br(),
+    h1('Welcome to the Franklin County Dashboard'),
+    br(),
+    br(),
+    p('Franklin County public schools manage 32 buses for 1,779 K-12 students across 39 routes, employing 28 contracted drivers for 11 schools. Due to driver shortages, some run double routes, and all drivers handle dispersed home pickups, being compensated for up to 110 miles daily. Challenges include increased student numbers from new housing developments, a shortage of both regular and special education drivers, and capacity limits, all managed by only two people in the Department. Buses struggle with overcrowding, longer routes due to more stops, and adherence to a 90-minute transit limit, further complicated by communication issues with parents and illegal actions by other drivers at student drop-offs. Additionally, incomplete maps hinder route planning. The Department seeks our analysis to propose more efficient routes meeting three criteria: safe transit within the 90-minute limit, doorstep pickups to avoid traffic hazards, and accommodating growing student numbers due to new constructions. They need our help to optimize these routes ahead of the new school term in August, addressing connectivity and capacity challenges efficiently.')),
     tabPanel(h4('New database'),
              br(),
              fluidRow(column(2,
@@ -138,8 +144,8 @@ ui <- page_navbar(
                  fluidRow(
                    p('Jeff Sons, Franklin County School District\nTransportation Director', align = "center")
                  )
-             ),
-             column(2)
+               ),
+               column(2)
              ),
              fluidRow(
                column(1),
@@ -190,10 +196,8 @@ ui <- page_navbar(
                ),
                column(1)
              ),
-             br(),
-             div(strong('Background:'), p('Franklin County public schools manage 32 buses for 1,779 K-12 students across 39 routes, employing 28 contracted drivers for 11 schools. Due to driver shortages, some run double routes, and all drivers handle dispersed home pickups, being compensated for up to 110 miles daily. Challenges include increased student numbers from new housing developments, a shortage of both regular and special education drivers, and capacity limits, all managed by only two people in the Department. Buses struggle with overcrowding, longer routes due to more stops, and adherence to a 90-minute transit limit, further complicated by communication issues with parents and illegal actions by other drivers at student drop-offs. Additionally, incomplete maps hinder route planning. The Department seeks our analysis to propose more efficient routes meeting three criteria: safe transit within the 90-minute limit, doorstep pickups to avoid traffic hazards, and accommodating growing student numbers due to new constructions. They need our help to optimize these routes ahead of the new school term in August, addressing connectivity and capacity challenges efficiently.')
-               )
-)))
+             )
+    ))
 
 
 ################################################################################
