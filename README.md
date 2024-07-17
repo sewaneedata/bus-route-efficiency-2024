@@ -2,14 +2,12 @@
 
 ## Description of the Files
 
-1. `addresses.R` - This takes the google sheet addresses and adds the address found on the google map API into the data set. Running this will take sometime because it takes time to access the API and grab the geo locations.
+1. `addresses.R` - This takes the google sheet addresses, geocodes them using the Google Maps API, and saves them in the `bus_gis.RData` file. This script requires a paid Google Maps API key and takes a while to run.
 2. `franklin_county.rds` - This has the geodata to draw the border of franklin county in maps.
 3. `bus_gis.RData` - This is the dataframe that has the latitudes and longitudes.
-4. `bus_functions.R`- This gives functions that can be called upon in the get_data and in app.R
-5. `get_data.R` - helping files similar to bus_data.R so that it prevents multiple things being called.
-6. `bus_default_data.rds` - This loads and holds the url that is inputed in the url and if no url is put in it is whatever the values is equal to.
-7. `bus_routes.rds` - this has the bus route information like the kids grade, bus number, house address, longitude and latitude, and reported miles. 
-8. `app.R` - This is where the dashboard with the user input and server is made. 
+4. `bus_functions.R`- This creates functions that are used in `get_data.R` and in `app.R`
+5. `get_data.R` - This file generates the data files `bus_default_data.rds` and `bus_routes.rds`, which contain whether or not the bus information is valid by checking for a longitude, latitude, and the address; google maps address; location type; and geo location for every address.
+6. `app.R` - This is where the dashboard with the user input and server is made. 
 
 ## Setup Before Running the Dashboard
 
