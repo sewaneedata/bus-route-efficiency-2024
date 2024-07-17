@@ -2,12 +2,12 @@
 
 ## Description of the Files
 
-1. `addresses.R` - This takes the google sheet addresses, geocodes them using the Google Maps API, and saves them in the `bus_gis.RData` file. This script requires a paid Google Maps API key and takes a while to run.
-2. `franklin_county.rds` - This has the geodata to draw the border of franklin county in maps. * This is the only part that has to be downloaded outside of the repository. 
-3. `bus_gis.RData` - This is the dataframe that has the latitudes and longitudes.
+1. `addresses.R` - This takes the Google sheet addresses, geocodes them using the Google Maps API, and saves them in the `bus_gis.RData` file. This script requires a paid Google Maps API key and takes a while to run. `addresses.R` generates bus_gis.RData`.
+2. `franklin_county.rds` - This has the geodata to draw the border of Franklin County in maps. * This is the only part that has to be downloaded outside of the repository. The link to `franklin_county.rds` can be found [here](https://drive.google.com/file/d/1FceRqZVVa3RhJmYRs1GRqeL69NRMsQ-h/view?usp=sharing). 
+3. `bus_gis.RData` - This is the data frame that has the latitudes and longitudes. The link for `bus_gis.RData` can be found [here](https://drive.google.com/file/d/1kl8nvWYXfcdH9jsDdYwMavAX3lSkdOnm/view?usp=sharing).
 4. `bus_functions.R`- This creates functions that are used in `get_data.R` and in `app.R`
-5. `get_data.R` - This file generates the data files `bus_default_data.rds` and `bus_routes.rds`, which contain whether or not the bus information is valid by checking for a longitude, latitude, and the address; google maps address; location type; and geo location for every address.
-6. `app.R` - This is where the dashboard with the map
+5. `get_data.R` - This file generates the data files `bus_default_data.rds` and `bus_routes.rds`, which contain whether or not the bus information is valid by checking for a longitude, latitude, and address; Google Maps address; location type; and geolocation for every address.
+6. `app.R` - Bus Shiny dashboard as it handles dynamic data updates, route selection, issue identification, and visualization, providing an interactive and efficient tool for managing school bus routes. By enabling real-time data processing and visualization, the dashboard helps administrators optimize routes, ensure data accuracy, and improve overall transportation efficiency.
 
 ## Setup Before Running the Dashboard
 
