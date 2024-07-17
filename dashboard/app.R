@@ -126,7 +126,7 @@ ui <- page_navbar(
                                column(1)),
                       br()
              ),
-             tabPanel(h4('About', class = "body"),
+             tabPanel(h4('Partners', class = "body"),
                       br(), br(),
                       tags$h2('Project Partners'),
                       fluidRow(
