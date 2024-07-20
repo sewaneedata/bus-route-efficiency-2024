@@ -7,7 +7,7 @@ library(tidyverse)
 library(mapsapi)
 library(geodata)
 library(leaflet)
-library(gsheet)
+library(googlesheets4)
 
 # Getting useful functions
 source("bus_functions.R")
@@ -43,13 +43,13 @@ save(bus_data, file = 'data/bus_default_data.rds')
 # Load bus routes data and edit it ##############################
 
 # Reads in the school names and addresses
-schools <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
+schools <- read_sheet("https://docs.google.com/spreadsheets/d/1SZl3nINhH9V832c_KYjxHGKEfWM4bSwYMRpCgNZg5XM/edit?gid=0#gid=0")
 
 # Transforms the school data into long/lat coordinates.
 schools <- st_as_sf(schools, coords = c("LONG", "LAT"), crs = "EPSG:4326")
 
 # this loads in the location of each student 
-bus_routes <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>%
+bus_routes <- read_sheet("https://docs.google.com/spreadsheets/d/12Qj9yy1YgqnOWQk3qDCRP9LjsEQUckdJz9DPwogGDSM/edit?pli=1&gid=0#gid=0") %>%
   # this was added to each address to keep all locations in Franklin County
   mutate(Address = paste0(Address, " 'Franklin County' TN"))
 

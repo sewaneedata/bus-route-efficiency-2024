@@ -4,11 +4,11 @@ library(sfheaders)
 library(tidyverse)
 library(leaflet)
 library(tmap)
-library(gsheet)
 library(tidygeocoder)
 library(terra)
 library(sf)
 library(bslib)
+library(googlesheets4)
 
 # Source functions code
 source('../bus_functions.R')
@@ -254,7 +254,11 @@ ui <- page_navbar(
     
     output$invalid = renderDT(
       rv$bus_data %>% filter(valid == FALSE),
-      options = list(lengthChange = FALSE)
+      # options = list(lengthChange = FALSE)
+      options = list(paging = TRUE, 
+                     pageLength = 20, 
+                     scrollY = '425px', 
+                     scrollX = '300px')
     )
     
     #=============================================================================

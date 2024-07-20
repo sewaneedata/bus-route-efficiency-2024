@@ -10,7 +10,7 @@ bus_data_process <- function(url){
   #routes
 
   # Take a url
-  df <- gsheet::gsheet2tbl(url)
+  df <- read_sheet(url)
 
   # Geocode addresses (handling lat long replacements)
   dfgeo <-
@@ -92,6 +92,20 @@ bus_validity_check <- function(bus_data){
 # Function: map dataset
 
 bus_mapper <- function(bus_data){
+  
+  # Un-comment this section for the public version to remove Addresses from being publicly seen
+  # if("address" %in% names(bus_data)) {
+  #   bus_data <- bus_data %>%
+  #     select(-address)
+  # }
+  # if("Address" %in% names(bus_data)) {
+  #   bus_data <- bus_data %>% 
+  #     select(-Address)
+  # }
+  # if("address_google" %in% names(bus_data)) {
+  #   bus_data <- bus_data %>% 
+  #     select(-address_google)
+  # }
 
   # Prep for tmap
   bus_data %>% head
