@@ -10,6 +10,9 @@ library(sf)
 library(bslib)
 library(googlesheets4)
 
+# Uncomment this for the public dashboard
+# gs4_deauth()
+
 # Source functions code
 source('../bus_functions.R')
 
@@ -219,9 +222,18 @@ ui <- page_navbar(
     
     observeEvent(input$reprocess, {
       withProgress(message = 'Geocoding addresses ...', value = .5, {
-        new_bus_data <- bus_data_process(input$url_bus)
-        new_bus_data <- bus_validity_check(new_bus_data)
-        rv$bus_data <- new_bus_data
+        tryCatch(
+          {
+            new_bus_data <- bus_data_process(input$url_bus)
+            new_bus_data <- bus_validity_check(new_bus_data)
+            rv$bus_data <- new_bus_data
+          },
+          error = function(cond) {
+            message(conditionMessage(cond))
+            showNotification("There was an issue updating the map using the provided Google Sheet link. Please double check that the sheet is set to viewable for anyone with the link.", duration = NULL)
+          }
+        )
+        
       }
       )
     })

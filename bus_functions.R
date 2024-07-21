@@ -10,42 +10,50 @@ bus_data_process <- function(url){
   #routes
 
   # Take a url
-  df <- read_sheet(url)
-
-  # Geocode addresses (handling lat long replacements)
-  dfgeo <-
-    df %>%
-    mutate(address = paste0(address,', Franklin County, TN, USA')) %>%
-    tidygeocoder::geocode(address, method = 'osm', lat = y , long = x)
-  dfgeo %>% as.data.frame
-
-  # Fill in any gaps using the lon and lat columns
-  bus_data <-
-    dfgeo %>%
-    rowwise() %>%
-    # Final coordinates
-    mutate(x = ifelse(!is.na(lon), lon, x)) %>%
-    mutate(y = ifelse(!is.na(lat), lat, y)) %>%
-    mutate(valid = ifelse(any(c(is.na(x), is.na(y))), FALSE, TRUE)) %>%
-    ungroup()
-
-  # Calculate N on board
-  bus_data <-
-    bus_data %>%
-    group_by(bus_route) %>%
-    arrange(order) %>%
-    mutate(n_big_pickup = tidyr::replace_na(n_big_pickup, 1)) %>%
-    mutate(n_big_dropoff = tidyr::replace_na(n_big_dropoff, 1)) %>%
-    mutate(n_lil_pickup = tidyr::replace_na(n_lil_pickup, 1)) %>%
-    mutate(n_lil_dropoff = tidyr::replace_na(n_lil_dropoff, 1)) %>%
-    mutate(n_big_change = n_big_pickup - n_big_dropoff) %>%
-    mutate(n_lil_change = n_lil_pickup - n_lil_dropoff) %>%
-    mutate(n_big_tot = cumsum(n_big_change)) %>%
-    mutate(n_lil_tot = cumsum(n_lil_change)) %>%
-    mutate(n_tot = n_big_tot + n_lil_tot) %>%
-    ungroup()
-
-  return(  bus_data %>% as.data.frame )
+  tryCatch(
+    {
+      df <- read_sheet(url)
+      
+      # Geocode addresses (handling lat long replacements)
+      dfgeo <-
+        df %>%
+        mutate(address = paste0(address,', Franklin County, TN, USA')) %>%
+        tidygeocoder::geocode(address, method = 'osm', lat = y , long = x)
+      dfgeo %>% as.data.frame
+      
+      # Fill in any gaps using the lon and lat columns
+      bus_data <-
+        dfgeo %>%
+        rowwise() %>%
+        # Final coordinates
+        mutate(x = ifelse(!is.na(lon), lon, x)) %>%
+        mutate(y = ifelse(!is.na(lat), lat, y)) %>%
+        mutate(valid = ifelse(any(c(is.na(x), is.na(y))), FALSE, TRUE)) %>%
+        ungroup()
+      
+      # Calculate N on board
+      bus_data <-
+        bus_data %>%
+        group_by(bus_route) %>%
+        arrange(order) %>%
+        mutate(n_big_pickup = tidyr::replace_na(n_big_pickup, 1)) %>%
+        mutate(n_big_dropoff = tidyr::replace_na(n_big_dropoff, 1)) %>%
+        mutate(n_lil_pickup = tidyr::replace_na(n_lil_pickup, 1)) %>%
+        mutate(n_lil_dropoff = tidyr::replace_na(n_lil_dropoff, 1)) %>%
+        mutate(n_big_change = n_big_pickup - n_big_dropoff) %>%
+        mutate(n_lil_change = n_lil_pickup - n_lil_dropoff) %>%
+        mutate(n_big_tot = cumsum(n_big_change)) %>%
+        mutate(n_lil_tot = cumsum(n_lil_change)) %>%
+        mutate(n_tot = n_big_tot + n_lil_tot) %>%
+        ungroup()
+      
+      return(  bus_data %>% as.data.frame )
+    },
+    error = function(cond) {
+      message(conditionMessage(cond))
+      return(NULL)
+    }
+  )
 }
 
 
@@ -99,11 +107,11 @@ bus_mapper <- function(bus_data){
   #     select(-address)
   # }
   # if("Address" %in% names(bus_data)) {
-  #   bus_data <- bus_data %>% 
+  #   bus_data <- bus_data %>%
   #     select(-Address)
   # }
   # if("address_google" %in% names(bus_data)) {
-  #   bus_data <- bus_data %>% 
+  #   bus_data <- bus_data %>%
   #     select(-address_google)
   # }
 
